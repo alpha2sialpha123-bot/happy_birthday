@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#020806">
+  <title>نظام الحماية | CYBER</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="matrix" aria-hidden="true"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-dot"></span> CYBER <span class="muted">// SYSTEM</span></div>
+      <div class="status"><span class="pulse"></span> <span>نشاط غير معتاد</span></div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">واجهة مراقبة رقمية <span>v.09.7</span></div>
+      <h1>جاري فحص<br><em>الجهاز...</em></h1>
+      <p class="subtitle" id="subtitle">يرجى الانتظار، لا تغلق الصفحة<span class="blink">_</span></p>
+    </section>
+
+    <div class="sound-note" id="soundNote"><span class="sound-dot"></span> مؤثرات صوتية تجريبية — قد يمنع المتصفح التشغيل التلقائي</div>
+
+    <section class="panel scanner-panel">
+      <div class="panel-heading"><span>ماسح النظام</span><span class="tiny" id="scanState">بدء الفحص</span></div>
+      <div class="scanner" id="scanner">
+        <div class="ring ring-outer"></div><div class="ring ring-mid"></div><div class="ring ring-inner"></div>
+        <div class="crosshair"></div>
+        <div class="face-hud">
+          <div class="face-corners"><i></i><i></i><i></i><i></i></div>
+          <div class="face-id">BIOMETRIC MAP <b>ACTIVE</b></div>
+          <svg class="face-mesh" viewBox="0 0 220 250" role="img" aria-label="واجهة بصرية تخيلية لمسح الوجه">
+            <defs>
+              <linearGradient id="faceGlow" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#b8ffdb"/><stop offset=".5" stop-color="#42ff9b"/><stop offset="1" stop-color="#00a95a"/>
+              </linearGradient>
+            </defs>
+            <path class="face-outline" d="M110 20 C73 20 49 47 51 91 L56 143 C60 180 80 211 110 225 C140 211 160 180 164 143 L169 91 C171 47 147 20 110 20Z"/>
+            <path class="mesh-line" d="M70 62 L91 48 L110 45 L129 48 L150 62 M58 87 L84 77 L110 75 L136 77 L162 87 M57 111 L82 106 L97 115 L110 119 L123 115 L138 106 L163 111 M62 140 L87 145 L110 141 L133 145 L158 140 M75 169 L94 178 L110 181 L126 178 L145 169 M91 198 L110 204 L129 198"/>
+            <path class="mesh-line" d="M70 62 L58 87 L57 111 L62 140 L75 169 L91 198 M91 48 L84 77 L82 106 L87 145 L94 178 L110 204 M110 45 L110 75 L110 119 L110 141 L110 181 L110 204 M129 48 L136 77 L138 106 L133 145 L126 178 L110 204 M150 62 L162 87 L163 111 L158 140 L145 169 L129 198"/>
+            <path class="face-feature" d="M76 91 Q91 82 101 92 M119 92 Q130 82 145 91 M110 91 L104 125 L116 128 M91 151 Q110 165 129 151"/>
+            <path class="face-feature" d="M72 85 L101 86 M119 86 L148 85 M84 145 L101 148 M119 148 L136 145"/>
+            <g class="landmarks">
+              <circle cx="76" cy="91" r="2.4"/><circle cx="101" cy="92" r="2.4"/><circle cx="119" cy="92" r="2.4"/><circle cx="145" cy="91" r="2.4"/>
+              <circle cx="110" cy="119" r="2.4"/><circle cx="104" cy="125" r="2.4"/><circle cx="116" cy="128" r="2.4"/>
+              <circle cx="91" cy="151" r="2.4"/><circle cx="110" cy="160" r="2.4"/><circle cx="129" cy="151" r="2.4"/>
+              <circle cx="70" cy="62" r="2"/><circle cx="110" cy="45" r="2"/><circle cx="150" cy="62" r="2"/>
+              <circle cx="62" cy="140" r="2"/><circle cx="158" cy="140" r="2"/><circle cx="110" cy="204" r="2"/>
+            </g>
+          </svg>
+          <div class="face-coordinates"><span>X: 044.81</span><span>Y: 19.62</span><span>DEPTH: --</span></div>
+          <div class="face-status" id="faceStatus">تحديد نقاط الوجه...</div>
+        </div>
+        <div class="scan-beam"></div>
+        <div class="scanner-label" id="scannerLabel">تهيئة الماسح البصري...</div>
+      </div>
+      <div class="metrics">
+        <div><span>حالة الاتصال</span><strong id="linkMetric">جاري التهيئة</strong></div>
+        <div><span>فحص بصري</span><strong id="faceMetric">0%</strong></div>
+        <div><span>نمط التشغيل</span><strong>محاكاة</strong></div>
+      </div>
+    </section>
+
+    <section class="panel progress-panel">
+      <div class="panel-heading"><span>مراحل المعالجة</span><span class="tiny" id="percent">00%</span></div>
+      <div class="progress-track"><div id="progressFill"></div><div class="progress-glint"></div></div>
+      <div class="progress-meta"><span id="progressLabel">بدء الاتصال...</span><span id="progressNumber">0%</span></div>
+    </section>
+
+    <section class="grid">
+      <div class="panel terminal-panel">
+        <div class="panel-heading"><span>سجل النظام</span><span class="live"><i></i> مباشر</span></div>
+        <div class="terminal" id="terminal" aria-live="polite"></div>
+      </div>
+      <div class="panel files-panel">
+        <div class="panel-heading"><span>قائمة المعالجة</span><span class="tiny">بيانات تجريبية</span></div>
+        <div id="fileList" class="file-list">
+          <div class="file-row"><span class="file-symbol">▣</span><span>صور_افتراضية.cache</span><span class="file-status">انتظار</span></div>
+          <div class="file-row"><span class="file-symbol">▣</span><span>فهرس_النظام.bin</span><span class="file-status">انتظار</span></div>
+          <div class="file-row"><span class="file-symbol">▣</span><span>نسخة_تجريبية.tmp</span><span class="file-status">انتظار</span></div>
+          <div class="file-row"><span class="file-symbol">▣</span><span>حزم_بيانات.log</span><span class="file-status">انتظار</span></div>
+        </div>
+        <div class="queue-foot">محاكاة مرئية فقط — لا يتم فتح الملفات الحقيقية</div>
+      </div>
+    </section>
+
+    <section class="alert-panel" id="alertPanel">
+      <div class="alert-icon">!</div>
+      <div><strong id="alertTitle">تنبيه النظام</strong><p id="alertText">يتم تشغيل الفحص المرئي تلقائياً...</p></div>
+    </section>
+
+    <section class="final-screen" id="finalScreen" aria-live="assertive">
+      <div class="final-glitch">⚠</div>
+      <div class="final-kicker">تحذير أمني حرج</div>
+      <div class="final-name">Alpha2</div>
+      <h2>تم اختراقك<br><span>ونقل بياناتك!</span></h2>
+      <p>اكتملت عملية نقل البيانات بنجاح.</p>
+      <div class="final-bar"><span></span></div>
+    </section>
+
+    </main>
+  <div id="flash" aria-hidden="true"></div>
+  <audio id="finalAlarm" src="alarm.mp3" loop preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
